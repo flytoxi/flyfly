@@ -9,6 +9,19 @@
 #define MAX_TELE 12
 #define MAX_ADDR 30
 
+
+enum Option
+{
+	EXIT,//0
+	ADD,//1
+	DEL,
+	SEARCH,
+	MODIFY,
+	SHOW,
+	SORT
+};
+
+
 struct PeoInfo
 {
 	char name[MAX_NAME];
@@ -27,4 +40,9 @@ struct Contact
 
 void InitContact(struct Contact* ps);                              
 void AddContact(struct Contact* ps);
+void DelContact(struct Contact* ps);
+void SearchContact(struct Contact* ps);
 void ShowContact(struct Contact* ps);
+
+
+
