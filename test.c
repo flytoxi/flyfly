@@ -50,12 +50,13 @@ int main()
 			SortContact(&con);
 			break;
 		case EXIT:
+			DestroyContact(&con);
 			printf("ÍË³ö³ÌĞò.\n");
 			break;
 		default:
 			printf("Ñ¡Ôñ´íÎó!\n");
 			break;
 		}
-	} while (1);
+	} while (input);
 	return 0;
 }

@@ -5,15 +5,19 @@
 #include "contact.h"
 
 
-void InitContact(struct Contact* ps)
+void InitContact(Contact* ps)
 {
 
-	memset(ps->data, 0, sizeof(ps->data));
+	ps->data = (PeoInfo*)malloc(DEFAULT_SZ *sizeof(PeoInfo));
+	if (ps->data == NULL)
+	{
+		return;
+	}
 	ps->size = 0;
-
+	ps->capacity = DEFAULT_SZ;
 }
 
-static int FindPeople(const struct Contact* ps,char name[MAX_NAME])
+static int FindPeople(const Contact* ps,char name[MAX_NAME])
 {
 	int i = 0;
 	for (i = 0; i < ps->size; i++)
@@ -27,9 +31,41 @@ static int FindPeople(const struct Contact* ps,char name[MAX_NAME])
 	}
 	return -1;
 }
-void AddContact(struct Contact* ps)
+void CheckCapacity(Contact* ps)
 {
-	if (ps->size == MAX)
+	if (ps->size == ps->capacity)
+	{
+		PeoInfo* ptr = realloc(ps->data, (ps->capacity + 2) * sizeof(PeoInfo));
+		if (ptr != NULL)
+		{
+			ps->data = ptr;
+			ps->capacity += 2;
+			printf("扩容成功;\n");
+		}
+		else
+			printf("扩容失败。\n");
+	}
+}
+
+void AddContact(Contact* ps)
+{
+	//检测当前通讯录的容量
+	//1.满了，增加空间
+	//2.不满，啥事都不干
+	CheckCapacity(ps);
+	printf("请输入名字：");
+	scanf("%s", ps->data[ps->size].name);
+	printf("请输入年龄：");
+	scanf("%d", &(ps->data[ps->size].age));
+	printf("请输入性别：");
+	scanf("%s", ps->data[ps->size].sex);
+	printf("请输入电话：");
+	scanf("%s", ps->data[ps->size].tele);
+	printf("请输入地址：");
+	scanf("%s", ps->data[ps->size].addr);
+	ps->size++;
+	printf("添加成功。\n");
+	/*if (ps->size == MAX)
 	{
 		printf("通讯录已满!\n");
 
@@ -50,17 +86,18 @@ void AddContact(struct Contact* ps)
 		printf("添加成功。\n");
 
 
-	}
+	}*/
 
 }
 
 
-void DelContact(struct Contact* ps)
+void DelContact(Contact* ps)
 {
 	char name[MAX_NAME];
+	int ret = FindPeople(ps, name);
 	printf("请输入你要删除人的名字:");
 	scanf("%s", name);
-	int ret = FindPeople(ps, name);
+	
 	if (ret == -1)
 	{
 		printf("找不到此人!\n");
@@ -77,12 +114,13 @@ void DelContact(struct Contact* ps)
 	}
 }
 
-void SearchContact(const struct Contact* ps)
+void SearchContact(const Contact* ps)
 {
 	char name[MAX_NAME];
+	int ret = FindPeople(ps, name);
 	printf("请输入你要查找的名字：");
 	scanf("%s", name);
-	int ret = FindPeople(ps, name);
+	
 	if (ret == -1)
 		printf("没有此人的信息。\n");
 	else
@@ -98,12 +136,13 @@ void SearchContact(const struct Contact* ps)
 
 }
 
-void ModifyContact(struct Contact* ps)
+void ModifyContact(Contact* ps)
 {
 	char name[MAX_NAME];
+	int ret = FindPeople(ps, name);
 	printf("请输入你要修改的名字：");
 	scanf("%s", name);
-	int ret = FindPeople(ps, name);
+	
 	if(ret == -1)
 	{
 		printf("找不到此人!\n");
@@ -125,7 +164,7 @@ void ModifyContact(struct Contact* ps)
 }
 
 
-void ShowContact(const struct Contact* ps)
+void ShowContact(const Contact* ps)
 {
 	if (ps->size == 0)
 	{
@@ -148,7 +187,7 @@ void ShowContact(const struct Contact* ps)
 	}
 }
 
-void SortContact(struct Contact* ps)
+void SortContact(Contact* ps)
 {
 	int i = 0;
 	int flag = 1; // 假设这一趟要排序的数据已经有序。
@@ -173,5 +212,12 @@ void SortContact(struct Contact* ps)
 	}
 	printf("排序成功。\n");
 
+
+}
+
+void DestroyContact(Contact* ps)
+{
+	free(ps->data);
+	ps->data = NULL;
 
 }
