@@ -1,7 +1,7 @@
 #pragma warning(disable:6031)//禁用 6031 的安全警告
 
 
-#include "contact.h"
+#include "Dynamic contact.h"
 
 
 
@@ -12,7 +12,7 @@ void menu()
 	printf("********    1. add         2. del     **********\n");
 	printf("********    3. search      4. modify  **********\n");
 	printf("********    5. show        6. sort    **********\n");
-	printf("********    0. exit                   **********\n");
+	printf("********    7. save        0. exit    **********\n");
 	printf("************************************************\n");
 
 }
@@ -48,10 +48,15 @@ int main()
 			break;
 		case SORT:
 			SortContact(&con);
-			break;
+			break;	
 		case EXIT:
+			SaveContact(&con);
 			DestroyContact(&con);
+			
 			printf("退出程序.\n");
+			break;
+		case SAVE:
+			SaveContact(&con);
 			break;
 		default:
 			printf("选择错误!\n");

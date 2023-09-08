@@ -19,7 +19,8 @@ enum Option
 	SEARCH,
 	MODIFY,
 	SHOW,
-	SORT
+	SORT,
+	SAVE
 };
 
 
@@ -56,6 +57,10 @@ void ShowContact(const Contact* ps);
 void SortContact(Contact* ps);
 //œ˙ªŸ
 void DestroyContact(Contact* ps);
+//±£¥Ê
+void SaveContact(Contact* ps);
+//º”‘ÿ
+void LoadContact(Contact* ps);
 
 
 

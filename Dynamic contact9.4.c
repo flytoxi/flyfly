@@ -2,7 +2,7 @@
 
 
 
-#include "contact.h"
+#include "Dynamic contact.h"
 
 
 void InitContact(Contact* ps)
@@ -15,7 +15,32 @@ void InitContact(Contact* ps)
 	}
 	ps->size = 0;
 	ps->capacity = DEFAULT_SZ;
+	//把文件中已有的信息加载到通讯录中
+	LoadContact(ps);
 }
+void CheckCapacity(Contact* ps);
+void LoadContact(Contact* ps)
+{
+	PeoInfo tmp = { 0 };
+	FILE* pfRead = fopen("Contact.txt", "rb");
+	if (pfRead == NULL)
+	{
+		printf("LoadContact %s\n", strerror(errno));
+		return;
+	}
+	
+	while (fread(&tmp, sizeof(PeoInfo), 1, pfRead))
+	{
+		CheckCapacity(ps);
+		ps->data[ps->size] = tmp;
+		ps->size++;
+	}
+	
+
+	fclose(pfRead);
+	pfRead = NULL;
+}
+
 
 static int FindPeople(const Contact* ps,char name[MAX_NAME])
 {
@@ -94,10 +119,9 @@ void AddContact(Contact* ps)
 void DelContact(Contact* ps)
 {
 	char name[MAX_NAME];
-	int ret = FindPeople(ps, name);
 	printf("请输入你要删除人的名字:");
 	scanf("%s", name);
-	
+	int ret = FindPeople(ps, name);
 	if (ret == -1)
 	{
 		printf("找不到此人!\n");
@@ -117,10 +141,9 @@ void DelContact(Contact* ps)
 void SearchContact(const Contact* ps)
 {
 	char name[MAX_NAME];
-	int ret = FindPeople(ps, name);
 	printf("请输入你要查找的名字：");
 	scanf("%s", name);
-	
+	int ret = FindPeople(ps, name);
 	if (ret == -1)
 		printf("没有此人的信息。\n");
 	else
@@ -139,10 +162,9 @@ void SearchContact(const Contact* ps)
 void ModifyContact(Contact* ps)
 {
 	char name[MAX_NAME];
-	int ret = FindPeople(ps, name);
 	printf("请输入你要修改的名字：");
 	scanf("%s", name);
-	
+	int ret = FindPeople(ps, name);
 	if(ret == -1)
 	{
 		printf("找不到此人!\n");
@@ -213,6 +235,24 @@ void SortContact(Contact* ps)
 	printf("排序成功。\n");
 
 
+}
+
+void SaveContact(Contact* ps)
+{
+	FILE* pfWrite = fopen("Contact.txt", "wb");
+	if (pfWrite == NULL)
+	{
+		printf("SaveContact %s\n", strerror(errno));
+		return;
+	}
+	int i = 0;
+	for (i = 0; i < ps->size; i++)
+	{
+		fwrite(&(ps->data[i]), sizeof(PeoInfo), 1, pfWrite);
+	}
+	printf("保存成功.\n");
+	fclose(pfWrite);
+	pfWrite = NULL;
 }
 
 void DestroyContact(Contact* ps)
