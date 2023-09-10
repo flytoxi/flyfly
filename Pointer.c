@@ -1,3 +1,6 @@
+#pragma warning(disable:6031)//禁用 6031 的安全警告
+
+
 
 #include <stdio.h>
 #include <Windows.h>
@@ -9,8 +12,237 @@
 
 
 //        指     针
-//  指针就是个变量，用来存放地址， 地址唯一
+//指针就是个变量，用来存放地址
 //指针的大小是固定的4/8个字节。(32位、64位)
+
+
+//(*(void (*)()0))();//把 0 强制类型转换成：void(*)() 函数指针类型， 0 就是一个函数的地址；
+//				 //调用0地址出的函数
+//
+//void(  *signal( int, void( * )( int ) ) )( int );   
+//                整形  函数指针类型                    函数返回类型  void(*)(int) - 函数指针
+
+// signal是一个函数声明
+// signal函数的参数有两个，第一个是 int , 第二个是 函数指针， 该函数指针指向的函数的参数是 int， 返回类型是 void 
+// signal函数的返回类型也是一个函数指针，该函数指针指向的函数的参数类型是 int ， 返回类型是void
+//void(*signal(int, void(*)(int)))(int);
+//typedef void(*pfun_t)(int);
+//pfun_t signal(int, pfun_t);
+ 
+
+
+
+// 函数指针
+
+//int Add(int x, int y)
+//{
+//	int z = x + y;
+//	return z;
+//}
+//int main()
+//{
+//	int a = 10;
+//	int b = 20;
+//	/*int arr[10] = { 0 };*/
+//	/*printf("sum = %d", Add(a, b));*/
+//	//&函数名 和 函数名 都是函数的地址
+//	/*printf("%p\n", &Add);
+//	printf("%p\n", Add);*/
+//	/*scanf("%d %d", &a, &b);*/
+//	int (*pa)(int, int) = Add;
+//	printf("sum = %d \n", (pa)(a, b));
+//  //printf("sum = %d \n", (*pa)(a, b));     
+//  //printf("sum = %d \n", (**pa)(a, b));  // *解引用 是个摆设 有没有没有太大的价值
+//  //printf("sum = %d \n", (***pa)(a, b)); //  函数名本来是个地址， Add(a,b)
+//}
+
+
+// 函数指针数组
+
+
+//char* my_strcpy(char* dest, const char* src);
+//int main()
+//{
+//	char* (*pf)(char*, const char*);
+//	char* (*pfarr[4])(char*, const char*);
+//}
+//	return 0;
+//}
+
+//  计算器
+//void menu()
+//{
+//	printf("-------------------------------------\n");
+//	printf("------- 1.Add  2.Sub  3.Mul ---------\n");
+//	printf("------- 4.Div  0.Exit       ---------\n");
+//	printf("-------------------------------------\n");
+//}
+//
+//int Add(int x, int y)
+//{
+//	return x + y;
+//}
+//int Sub(int x, int y)
+//{
+//	return x - y;
+//}
+//int Mul(int x, int y)
+//{
+//	return x * y;
+//}
+//int Div(int x, int y)
+//{
+//	return x / y;
+//}
+//int main()
+//{
+//	int x = 0;
+//	int y = 0;
+//	int input = 0;
+//	int(*parr[5])(int, int) = { 0, Add, Sub, Mul, Div };
+//	do
+//	{
+//		menu();
+//		printf("请选择：");
+//		scanf("%d", &input);
+//		if (input >= 1 && input <= 4)
+//		{
+//			printf("请输入两个数字：");
+//			scanf("%d %d", &x, &y);
+//			int ret = parr[input](x, y);
+//			printf("%d\n", ret);
+//		}
+//		else if (input == 0)
+//		{
+//			printf("退出程序。\n");
+//		}
+//		else
+//			printf("选择错误，请重新输入：\n");
+//	} while (input);
+//	return 0;
+//}
+
+// 
+//int main()
+//{
+//	int* arr[5];
+//	//需要一个数组， 存放4个函数的地址 - 函数指针的数组
+//	/*int (*p)(int, int) = Add;*/
+//	int (*parr[5])(int, int) = { Add, Sub, Mul, Div };
+//	int i = 0;
+//	for (i = 0; i < 4; i++)
+//	{
+//		printf("%d\n",parr[i](4, 2));
+//	}
+//	return 0;
+//}
+
+//void Print(char* str)
+//{
+//	printf("%s\n", str);
+//}
+//int main()
+//{
+//	void (*p)(char*) = Print;
+//	(*p)("hello world!!!");
+//	return 0;
+//}
+
+//数组参数，指针参数
+
+//二级指针
+
+//void test(int** ptr)
+//{
+//	printf("%d\n", **ptr);
+//
+//}
+//int main()
+//{
+//	int n = 10;
+//	int* p = &n;
+//	int** pp = &p;
+//	test(pp);
+//	test(&p);
+//	return 0;
+//}
+
+
+//void test(int** p) 
+//{}
+//int main()
+//{
+//	int* arr[10] = { 0 }; //指针数组
+//	test(arr);
+//	return 0;
+//}
+
+//一级指针
+//void test1(int* p)
+//{}
+//void test2(char* p)
+//{}
+//int main()
+//{
+//	int a = 10;
+//	int* p1 = &a;
+//	test1(&a);
+//	test1(p1);
+//	char ch = 'w';
+//	char* pc = &ch;
+//	test2(&ch);
+//	test2(pc);
+//	return 0;
+//}
+
+
+
+//一维数组
+//void test(int arr[])     √
+//{}
+//void test(int arr[10])   √ //数组大小可以不写
+//{}
+//void test(int *arr)      √
+//{}
+//void test2(int *arr[20]) √
+//{}
+//void test2(int **arr)    √
+//{}
+//int main()
+//{
+//	int arr[10] = { 0 };
+//	int* arr2[20] = { 0 };
+//	test(arr);
+//	test(arr2);
+//	return 0;
+//}
+
+//二维数组
+
+//void test(int arr[3][5]) √ // 行可以省略，列不能
+//{}
+//void test(int arr[][5])  √
+//{}
+//void test(int arr[3][])  ×
+//{}
+//void test(int *arr)      ×
+//{}
+//void test(int **arr)     ×
+//{}
+//void test(int *arr[5])   ×
+//{}
+//void tes(int (*arr)[5])  √
+//{}
+//
+//
+//int main()
+//{
+//	int arr[3][5] = { 0 };
+//	test(arr);
+//	return 0;
+//}
+
+
 
 
 //int arr[5];		  //arr 是一个5个元素的数组
