@@ -13,102 +13,122 @@
 
 //        指     针
 
+// 回调函数
 
-//指向函数指针数组的指针
+// 通过函数指针调用的函数
 
+//void print(char* str)
+//{
+//	printf("hehe: %s", str);
+//}
+//
+//void test(void (*p)(char*))
+//{
+//	printf("test\n");
+//	p("flyfly");
+//}
 //int main()
 //{
-//	int arr[10] = { 0 };
-//	int(*p)][10] = &arr;
 //	
-//	int (*pf)(int, int);// 函数指针
-//
-//	int (*pfArr[4])(int, int);  // pfArr是一个数组 -  函数指针数组
-//	int (*(*ppfArr)[4])(int, int) = &pfArr;
-//	//ppfArr 是一个数组指针， 指针指向的数组有4个元素，每个元素的类型是一个函数指针  int (*)(int, int)
-//
+//	test(print);
 //	return 0;
 //}
 
+//qsort - 可以排序任意类型的数据
 
 
+//void qsort(void* base, 
+//			size_t num, 
+//			size_t width,
+//			int(* cmp)(const void* e1,const void* e2));
 
 
-
-
-
-
-
-
-
-
-
-
-
-//  计算器
-//void menu()
+//struct Stu
 //{
-//	printf("-------------------------------------\n");
-//	printf("------- 1.Add  2.Sub  3.Mul ---------\n");
-//	printf("------- 4.Div  0.Exit       ---------\n");
-//	printf("-------------------------------------\n");
+//	char name[20];
+//	int age;
+//};
+//
+//
+//
+//
+//
+//int cmp_int(const void* e1, const void* e2)
+//{
+//	return *(int*)e1 - *(int*)e2;
 //}
 //
-//void Calc(int (*pf)(int, int))
+//int cmp_float(const void* e1, const void* e2)
 //{
-//	int x = 0;
-//	int y = 0;
-//	printf("请输入两个数字：");
-//	scanf("%d %d", &x, &y);
-//	printf("%d\n", pf(x, y));
+//	return (int)(*(float*)e1 - *(float*)e2);
 //}
-//
-//int Add(int x, int y)
+//int cmp_stu_age(const void* e1, const void* e2)
 //{
-//	return x + y;
+//	return ((struct Stu*)e1)->age - ((struct Stu*)e2)->age;
 //}
-//int Sub(int x, int y)
+//int cmp_stu_name(const void* e1, const void* e2)
 //{
-//	return x - y;
-//}
-//int Mul(int x, int y)
-//{
-//	return x * y;
-//}
-//int Div(int x, int y)
-//{
-//	return x / y;
+//	return strcmp(((struct Stu*)e1)->name, ((struct Stu*)e2)->name);
 //}
 //int main()
 //{
-//	int input = 0;
-//	do
+//	int arr[10] = { 0, 8, 2, 3, 6, 5, 9, 7, 4, 1};
+//	int sz = sizeof(arr) / sizeof(arr[0]);
+//	struct Stu s[3] = { {"zhangsan", 21}, {"lisi", 32}, {"wangwu", 9} };
+//	int ssz = sizeof(s) / sizeof(s[0]);
+//	float f[6] = {5.0, 8.0, 4.0, 1.0, 3.0, 9.0};
+//	int fsz = sizeof(f) / sizeof(f[0]);
+//
+//	qsort(arr, sz, sizeof(arr[0]), cmp_int);
+//
+//	int i = 0;
+//	for (i = 0; i < sz; i++)
 //	{
-//		menu();
-//		printf("请选择：");
-//		scanf("%d", &input);
-//		switch (input)
-//		{
-//		case 1:
-//			Calc(Add);
-//			break;
-//		case 2:
-//			Calc(Sub);
-//			break;
-//		case 3:
-//			Calc(Mul);
-//			break;
-//		case 4:
-//			Calc(Div);
-//			break;
-//		case 0:
-//			printf("退出:\n");
-//			break;
-//		default:
-//			printf("输入错误：\n");
-//			break;
-//		}
-//	} while (input);
+//		printf("%d ", arr[i]);
+//	}
+//		printf("\n");
+//
+//	qsort(f, fsz, sizeof(f[0]), cmp_float);
+//
+//	int j = 0;
+//	for (j = 0; j < fsz; j++)
+//	{
+//		printf("%f ", f[j]);
+//	}
+//		printf("\n");
+//
+//	qsort(s, ssz, sizeof(s[0]), cmp_stu_age);
+//
+//	int k = 0;
+//	for (k = 0; k < ssz; k++)
+//	{
+//		printf("姓名：%s 年龄: %d \n", s[k].name, s[k].age);
+//	}
+//	qsort(s, ssz, sizeof(s[0]), cmp_stu_name);
+//	
+//	int l = 0;
+//	for (l = 0; l < ssz; l++)
+//	{
+//		printf("姓名：%s 年龄: %d \n", s[l].name, s[l].age);
+//	}
+//	
+//
+//	
+//	
 //	return 0;
 //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
