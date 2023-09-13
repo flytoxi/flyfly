@@ -1,19 +1,7 @@
 #pragma warning(disable:6031)//禁用 6031 的安全警告
 
 
-
 #include <stdio.h>
-#include <Windows.h>
-#include <time.h>
-#include <string.h>
-#include <stdlib.h>
-#include <conio.h>
-#include <math.h>
-
-
-//       指     针
-
-
 
 struct People
 {
@@ -57,10 +45,10 @@ void bubble_sort(void* base, int sz, int width, int (*cmp)(void* e1, void* e2))
 		int j = 0;
 		for (j = 0; j < sz - 1 - i; j++)
 		{
-			if (cmp((char*)base+j*width, (char*)base+(j+1)*width)>0)
+			if (cmp((char*)base + j * width, (char*)base + (j + 1) * width) > 0)
 			{
 				//交换
-				Swap((char*)base+j*width, (char*)base+(j+1)*width, width);
+				Swap((char*)base + j * width, (char*)base + (j + 1) * width, width);
 			}
 		}
 	}
@@ -70,7 +58,7 @@ void bubble_sort(void* base, int sz, int width, int (*cmp)(void* e1, void* e2))
 
 void test()
 {
-	int arr[15] = { 9,8,7,6,5,4,3,2,1,0,4564,845467,234564565,35461,254765462};
+	int arr[15] = { 9,8,7,6,5,4,3,2,1,0,4564,845467,234564565,35461,254765462 };
 	int sz = sizeof(arr) / sizeof(arr[0]);
 	bubble_sort(arr, sz, sizeof(arr[0]), cmp_int);
 	int i = 0;
@@ -112,16 +100,3 @@ int main()
 	test3();
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
