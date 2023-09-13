@@ -13,52 +13,66 @@
 
 //       指     针
 
-// qsort - 可以排序任意类型的数据
 
 
-//void qsort(void* base, 
-//			size_t num, 
-//			size_t width,
-//			int(* cmp)(const void* e1,const void* e2));
-
-//第一个参数:  待排序数组的首元素地址
-//第二个参数:  待排序数组的元素个数
-//第三个参数:  待排序数组的每个元素的大小
-//第四个参数:  是函数指针， 比较两个元素的所用函数的地址-这个函数使用者自己实现
-//               函数指针的两个参数是: 带比较的两个元素的地址       
-
-
-struct Stu
+struct People
 {
 	char name[20];
 	int age;
+
 };
 
+void Swap(char* buf1, char* buf2, int width)
+{
+	int i = 0;
+	for (i = 0; i < width; i++)
+	{
+		char tmp = *buf1;
+		*buf1 = *buf2;
+		*buf2 = tmp;
+		buf1++; buf2++;
+	}
+}
 
 int cmp_int(const void* e1, const void* e2)
 {
 	return *(int*)e1 - *(int*)e2;
 }
 
-int cmp_float(const void* e1, const void* e2)
-{
-	return (int)(*(float*)e1 - *(float*)e2);
-}
 int cmp_stu_age(const void* e1, const void* e2)
 {
-	return ((struct Stu*)e1)->age - ((struct Stu*)e2)->age;
-}
-int cmp_stu_name(const void* e1, const void* e2)
-{
-	return strcmp(((struct Stu*)e1)->name, ((struct Stu*)e2)->name);
+	return ((struct People*)e1)->age - ((struct People*)e2)->age;
 }
 
-void test1()
+int cmp_stu_name(const void* e1, const void* e2)
 {
-	int arr[10] = { 0, 8, 2, 3, 6, 5, 9, 7, 4, 1 };
+	return strcmp(((struct People*)e1)->name, ((struct People*)e2)->name);
+}
+
+void bubble_sort(void* base, int sz, int width, int (*cmp)(void* e1, void* e2))
+{
+	int i = 0;
+	for (i = 0; i < sz - 1; i++)
+	{
+		int j = 0;
+		for (j = 0; j < sz - 1 - i; j++)
+		{
+			if (cmp((char*)base+j*width, (char*)base+(j+1)*width)>0)
+			{
+				//交换
+				Swap((char*)base+j*width, (char*)base+(j+1)*width, width);
+			}
+		}
+	}
+}
+
+
+
+void test()
+{
+	int arr[15] = { 9,8,7,6,5,4,3,2,1,0,4564,845467,234564565,35461,254765462};
 	int sz = sizeof(arr) / sizeof(arr[0]);
-	qsort(arr, sz, sizeof(arr[0]), cmp_int);
-	//打印
+	bubble_sort(arr, sz, sizeof(arr[0]), cmp_int);
 	int i = 0;
 	for (i = 0; i < sz; i++)
 	{
@@ -69,59 +83,35 @@ void test1()
 
 void test2()
 {
-	float f[6] = { 5.0, 8.0, 4.0, 1.0, 3.0, 9.0 };
-	int fsz = sizeof(f) / sizeof(f[0]);
-	qsort(f, fsz, sizeof(f[0]), cmp_float);
-	//打印
-	int j = 0;
-	for (j = 0; j < fsz; j++)
+	struct People p[3] = { {"zhangsan", 55}, {"lisi", 25}, {"wangwu", 18} };
+	int sz = sizeof(p) / sizeof(p[0]);
+	bubble_sort(p, sz, sizeof(p[0]), cmp_stu_name);
+	int i = 0;
+	for (i = 0; i < sz; i++)
 	{
-		printf("%f ", f[j]);
+		printf("姓名：%-5s\t  年龄：%-4d\t \n", p[i].name, p[i].age);
 	}
 	printf("\n");
 }
 
 void test3()
 {
-	struct Stu s[3] = { {"zhangsan", 21}, {"lisi", 32}, {"wangwu", 9} };
-	int ssz = sizeof(s) / sizeof(s[0]);
-
-	qsort(s, ssz, sizeof(s[0]), cmp_stu_age);
-	//打印
-	int k = 0;
-	for (k = 0; k < ssz; k++)
+	struct People p[3] = { {"zhangsan", 55}, {"lisi", 25}, {"wangwu", 18} };
+	int sz = sizeof(p) / sizeof(p[0]);
+	bubble_sort(p, sz, sizeof(p[0]), cmp_stu_age);
+	int i = 0;
+	for (i = 0; i < sz; i++)
 	{
-		printf("姓名：%s 年龄: %d \n", s[k].name, s[k].age);
+		printf("姓名：%-5s\t  年龄：%-4d\t \n", p[i].name, p[i].age);
 	}
-}
-void test4()
-{
-	struct Stu s[3] = { {"zhangsan", 21}, {"lisi", 32}, {"wangwu", 9} };
-	int ssz = sizeof(s) / sizeof(s[0]);
-	qsort(s, ssz, sizeof(s[0]), cmp_stu_name);
-	//打印
-	int l = 0;
-	for (l = 0; l < ssz; l++)
-	{
-		printf("姓名：%s 年龄: %d \n", s[l].name, s[l].age);
-	}
-
 }
 int main()
 {
-	//  qsort  排序
-	// 整数
-	test1();
-	// 浮点数
+	test();
 	test2();
-	// 结构体 年龄
 	test3();
-	// 结构体 名字
-	test4();
 	return 0;
 }
-
-
 
 
 
