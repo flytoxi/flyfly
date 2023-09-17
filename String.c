@@ -16,96 +16,146 @@
 
 //  字符串
 
-// strlen
 
-//int my_strlen(const char* str)
+//strncat
+
+//char* my_strncat(char* str1, const char* str2, int count)
 //{
-//	int count = 0;
-//	assert(*str != NULL);
-//	while (*str)
-//	{
-//		count++;
-//		str++;
-//	}
-//	return count;
-//}
-//size_t
-//
-//int main()
-//{
-//	//int len = strlen("abcdefg");
-//	//char arr[] = { 'a', 'b', 'c', 'd ', 'e' };
-//	//int len = strlen(arr);
-//	//int len = my_strlen("abcdefg");
-//	//printf("%d\n", len);
-//	if (strlen("abc") - strlen("abcdef") > 0)  // strlen  返回类型是 size_t == unsigned int  无符号整形
-//	{
-//		printf("hehe\n");
-//	}
-//	else
-//		printf("haha\n");
-//
-//	return 0;
-//}
-
-// strcpy
-
-
-//char* my_strcpy(char* dest, char* src)
-//{
-//	assert(dest != NULL);
-//	assert(src != NULL);
-//	char* ret = dest;
-//	// 拷贝src指向的字符串到dest指向的空间，包含  '\0'
-//	while (*dest++ = *src++)
-//	{
+//	assert(str1 && str2);
+//	char* start = str1;
+//	while (*str1++)
 //		;
+//	str1--;
+//	while (count--)
+//	{
+//		*str1 = *str2;
+//		str1++;
+//		str2++;
 //	}
-//	// 返回目的空间的起始地址
-//	return ret;
+//
+//	return(start);
 //}
 //
 //int main()
 //{
-//	char arr1[] = "abcdefghi";
-//	char arr2[] = "hello";
-//	my_strcpy(arr1, arr2);
-//	//strcpy(arr1, arr2);   //  hello \0
-//	printf("%s\n", arr1);
-//	return 0;
-//}
-
-// strcat
-
-//char* my_strcat(char* dest, const char* src)
-//{
-//	assert(dest != NULL);
-//	assert(src != NULL);
-//	char* ret = dest;
-//	//1.找到目的字符串的 '\0 '
-//	while (*dest != '\0')
-//	{
-//		dest++;
-//	}
-//	//2. 追加
-//	while (*dest++ = *src++)
-//	{
-//		;
-//	}
-//	return ret;
-//}
-//
-//int main()
-//{
-//	char arr1[30] = "hello";  //  追加的空间必须足够大    目的地是\0   \0也传过去
+//	char arr1[30] = "hello\0xxxxxxxx";
 //	char arr2[] = "world";
-//	//strcat(arr1, arr2);
-//	my_strcat(arr1, arr2);
+//	//strncat(arr1, arr2, 5);
+//	my_strncat(arr1, arr2, 7);
+//	printf("%s\n", arr1);
+//	return 0;
+//}
+
+
+//strncpy
+
+//void my_strncpy(char* str1, const char* str2, int x)
+//{
+//	assert(str1 && str2);
+//	while (x && (*str1 = *str2))
+//	{
+//		*str1 = *str2;
+//		str1++;
+//		str2++;
+//		x--;
+//	}
 //
+//}
+//
+//int main()
+//{
+//	char arr1[] = "abcdefg";
+//	char arr2[] = "oooooo";
+//	my_strncpy(arr1, arr2, 4);
+//	printf("%s\n", arr1);
+//	return 0;
+//}
+
+
+// strcmp  比较字符串大小  int strcmp(const cahr* e1, const char* e2)
+
+//int my_strcmp(const char* p1, const char* p2)
+//{
+//	assert(p1 && p2);
+//	// 比较
+//	while (*p1 == *p2)
+//	{
+//		if (*p1 == '0')
+//		{
+//			return 0;
+//		}
+//		p1++;
+//		p2++;
+//	}
+//	if (*p1 > *p2)
+//		return 1;
+//	else
+//		return -1;
+//
+//}
+//int main()
+//{
+//	char* p1 = "abcdef";   //常量字符串 表达式 ， 首字符的地址
+//	char* p2 = "sqwer";
+//	/*int ret = strcmp(p1, p2);*/  // 字符串一个一个比 a b c d .... w x y z   大于返回 大于 0 的数 ， 等于返回 0 ， 小于返回 小于 0 的数
+//	int ret = my_strcmp(p1, p2);
+//	printf("ret = %d", ret);
+//	return 0;
+//}
+
+
+
+//int main()
+//{
+//
+//	// 长度不受限制的字符串函数类型  不安全  strcpy strcmp strcat
+//	char arr1[5] = "abc";
+//	char arr2[] = "hello world";
+//	strcpy(arr1, arr2);  //×
+//	printf("%s\0", arr1); 
+//	return 0;
+//}
+
+//int main()
+//{
+//	// 长度受限制的字符串函数类型  相对安全  strncpy strncmp strncat
+//	char arr1[] = "abcdefgh";
+//	char arr2[] = "ooo";
+//	char arr3[] = "pppppppppp";
+//	strncpy(arr1, arr2, 5);
+//	printf("%s\n", arr1);
+//	strncpy(arr1, arr3, 8);
 //	printf("%s\n", arr1);
 //
 //	return 0;
 //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
